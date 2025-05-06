@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/employee")
@@ -19,6 +20,11 @@ public class EmployeeController {
     @GetMapping("/all")
     public ResponseEntity<List<Employee>> getAllEmployees(){
         return ResponseEntity.ok(employeeService.findAllEmployees());
+    }
+
+    @GetMapping("/{employeeId}")
+    public ResponseEntity<Optional<Employee>> getEmployeeById(@PathVariable String employeeId){
+        return new ResponseEntity<Optional<Employee>>(employeeService.findEmployeeById(employeeId), HttpStatus.OK);
     }
 
     @PostMapping("/add-new")

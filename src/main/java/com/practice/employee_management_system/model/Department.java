@@ -11,15 +11,13 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String departmentName;
-    private String departmentHead;
 
     public Department() {
     }
 
-    public Department(int id, String departmentName, String departmentHead) {
+    public Department(int id, String departmentName) {
         this.id = id;
         this.departmentName = departmentName;
-        this.departmentHead = departmentHead;
     }
 
     public int getId() {
@@ -38,11 +36,4 @@ public class Department {
         this.departmentName = departmentName;
     }
 
-    public String getDepartmentHead() {
-        return departmentHead;
-    }
-
-    public void setDepartmentHead(String departmentHead) {
-        this.departmentHead = departmentHead;
-    }
 }
