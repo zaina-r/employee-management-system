@@ -2,10 +2,12 @@ package com.practice.employee_management_system.service;
 
 import com.practice.employee_management_system.model.Employee;
 import com.practice.employee_management_system.repository.EmployeeRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -17,9 +19,11 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Optional<Employee> findEmployeeById(String id){
-        return employeeRepository.findById(id);
-        //"Optional" is added to handle the cases where the provided id doesn't exist
+    public Optional<Employee> findByEmployeeId(String employeeId){
+        if (!employeeRepository.existsByEmployeeId(employeeId)) {
+            throw new RuntimeException("Employee not found");
+        }
+        return employeeRepository.findByEmployeeId(employeeId);
     }
 
     public void addNewEmployee(Employee employee){
@@ -27,4 +31,11 @@ public class EmployeeService {
         employeeRepository.save(employee);
     }
 
+    @Transactional
+    public void deleteEmployee(String employeeId){
+        if (!employeeRepository.existsByEmployeeId(employeeId)) {
+            throw new RuntimeException("Employee not found");
+        }
+        employeeRepository.deleteByEmployeeId(employeeId);
+    }
 }

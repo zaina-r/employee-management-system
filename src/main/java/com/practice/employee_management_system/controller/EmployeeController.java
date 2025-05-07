@@ -33,4 +33,9 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(employee);
     }
 
+    @DeleteMapping("/remove/{employeeId}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable String employeeId){
+        employeeService.deleteEmployee(employeeId);
+        return ResponseEntity.ok("Employee " + employeeId + " has been removed from the database");
+    }
 }
