@@ -27,8 +27,11 @@ public class EmployeeService {
     }
 
     public void addNewEmployee(Employee employee){
-
         employeeRepository.save(employee);
+    }
+
+    public void updateEmployee(String employeeId, Map<String, Object> body){
+        Optional<Employee> employee = employeeRepository.findByEmployeeId(employeeId);
     }
 
     @Transactional
@@ -37,5 +40,9 @@ public class EmployeeService {
             throw new RuntimeException("Employee not found");
         }
         employeeRepository.deleteByEmployeeId(employeeId);
+    }
+
+    public List<Employee> findByDepartmentName(String departmentName){
+        return employeeRepository.findByDepartmentDepartmentName(departmentName);
     }
 }

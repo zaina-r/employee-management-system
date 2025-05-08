@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -24,7 +25,17 @@ public class EmployeeController {
 
     @GetMapping("/{employeeId}")
     public ResponseEntity<Optional<Employee>> getEmployeeById(@PathVariable String employeeId){
-        return new ResponseEntity<Optional<Employee>>(employeeService.findEmployeeById(employeeId), HttpStatus.OK);
+      return ResponseEntity.ok(employeeService.findByEmployeeId(employeeId));
+    }
+
+    @GetMapping("/department/{departmentName}")
+    public ResponseEntity<List<Employee>> getEmployeesByDepartment(@PathVariable String departmentName){
+        return  ResponseEntity.ok((employeeService.findByDepartmentName(departmentName)));
+    }
+
+    @PatchMapping("/update/{employeeId}")
+    public void updateEmployee(@PathVariable String employeeId, @RequestBody Map<String, Object> body){
+        employeeService.updateEmployee(employeeId, body);
     }
 
     @PostMapping("/add-new")
