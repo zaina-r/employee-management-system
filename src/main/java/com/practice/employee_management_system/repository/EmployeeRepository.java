@@ -10,5 +10,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
     Optional<Employee> findByEmployeeId(String employeeId);
     boolean existsByEmployeeId(String employeeId);
     void deleteByEmployeeId(String employeeId);
-    public List<Employee> findByDepartmentDepartmentName(String departmentName);
+    List<Employee> findByDepartmentDepartmentName(String departmentName);
+
+    Employee findByUsername(String username);
+
 }

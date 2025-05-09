@@ -24,11 +24,15 @@ public class Employee {
     private Date dateOfJoining;
     @Column(unique = true, nullable = false)
     private String email;
+    @Column(unique = true, nullable = false)
+    private String username;
+    @Column(nullable = false)
+    private String password;
 
     public Employee() {
     }
 
-    public Employee(int id, String employeeId, String firstName, String lastName, Department department, String designation, Date dateOfJoining, String email) {
+    public Employee(int id, String employeeId, String firstName, String lastName, Department department, String designation, Date dateOfJoining, String email, String username, String password) {
         this.id = id;
         this.employeeId = employeeId;
         this.firstName = firstName;
@@ -37,6 +41,8 @@ public class Employee {
         this.designation = designation;
         this.dateOfJoining = dateOfJoining;
         this.email = email;
+        this.username = username;
+        this.password = password;
     }
 
     public int getId() {
@@ -101,5 +107,21 @@ public class Employee {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
