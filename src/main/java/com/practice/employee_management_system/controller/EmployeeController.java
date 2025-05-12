@@ -44,6 +44,11 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(employee);
     }
 
+    @PostMapping("/login")
+    public String login(@RequestBody Employee employee){
+        return employeeService.verifyUser(employee);
+    }
+
     @DeleteMapping("/remove/{employeeId}")
     public ResponseEntity<String> deleteEmployee(@PathVariable String employeeId){
         employeeService.deleteEmployee(employeeId);

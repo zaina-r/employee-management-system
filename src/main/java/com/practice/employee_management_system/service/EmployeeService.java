@@ -3,7 +3,12 @@ package com.practice.employee_management_system.service;
 import com.practice.employee_management_system.model.Employee;
 import com.practice.employee_management_system.repository.EmployeeRepository;
 import jakarta.transaction.Transactional;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +19,10 @@ import java.util.Optional;
 public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JWTService jwtService;
 
     public List<Employee> findAllEmployees(){
         return employeeRepository.findAll();
@@ -45,4 +54,14 @@ public class EmployeeService {
     public List<Employee> findByDepartmentName(String departmentName){
         return employeeRepository.findByDepartmentDepartmentName(departmentName);
     }
+
+    public String verifyUser(Employee employee) {
+        Authentication authentication =
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(employee.getUsername(), employee.getPassword()));
+        if(authentication.isAuthenticated())
+            return jwtService.generateToken(employee.getUsername());
+        return "Unsuccessful";
+    }
+
+
 }
