@@ -1,0 +1,16 @@
+.login{
+    display: inline-block;
+    margin: 10px;
+    width: 200px;
+    height: 100px;
+    padding: 5px;
+    border: 2px, solid black;
+}
+
+.login-button{
+    background-color: rgb(226, 226, 226);
+}
+
+.login-button:hover{
+    box-shadow: 0 0 5px rgba(155, 155, 155, 0.679);
+}
