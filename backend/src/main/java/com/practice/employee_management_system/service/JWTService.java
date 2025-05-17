@@ -1,19 +1,19 @@
 package com.practice.employee_management_system.service;
 
+import com.practice.employee_management_system.model.Employee;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Service
@@ -22,6 +22,7 @@ public class JWTService {
     private String key = "";
 
     public JWTService(){
+        //todo: we can use a single key in our env files so that the app doesn't generate a new key each time it runs
         try {
             KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
             SecretKey secretKey = keyGenerator.generateKey();
@@ -30,12 +31,14 @@ public class JWTService {
             throw new RuntimeException(e);
         }
     }
-    public String generateToken(String username){
+    public String generateToken(Employee employee){
         Map<String, Object> claims = new HashMap<>();
+        claims.put("role", employee.getRole());
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + employee.getRole()));
         return Jwts.builder()
                 .claims()
                 .add(claims)
-                .subject(username)
+                .subject(employee.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 30*60*1000))
                 .and()
@@ -53,7 +56,7 @@ public class JWTService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
         final Claims claims = extractAllCLaims(token);
         return claimsResolver.apply(claims);
     }

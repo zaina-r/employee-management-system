@@ -28,11 +28,22 @@ public class Employee {
     private String username;
     @Column(nullable = false)
     private String password;
+    private String role;
 
     public Employee() {
     }
 
-    public Employee(int id, String employeeId, String firstName, String lastName, Department department, String designation, Date dateOfJoining, String email, String username, String password) {
+    public Employee(int id,
+                    String employeeId,
+                    String firstName,
+                    String lastName,
+                    Department department,
+                    String designation,
+                    Date dateOfJoining,
+                    String email,
+                    String username,
+                    String password,
+                    String role) {
         this.id = id;
         this.employeeId = employeeId;
         this.firstName = firstName;
@@ -43,6 +54,15 @@ public class Employee {
         this.email = email;
         this.username = username;
         this.password = password;
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public int getId() {

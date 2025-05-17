@@ -59,7 +59,7 @@ public class EmployeeService {
         Authentication authentication =
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(employee.getUsername(), employee.getPassword()));
         if(authentication.isAuthenticated())
-            return jwtService.generateToken(employee.getUsername());
+            return jwtService.generateToken(employee);
         return "Unsuccessful";
     }
 
