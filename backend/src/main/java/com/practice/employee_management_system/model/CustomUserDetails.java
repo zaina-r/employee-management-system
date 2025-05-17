@@ -5,19 +5,19 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
-public class EmployeePrincipal implements UserDetails {
+public class CustomUserDetails implements UserDetails {
 
     private Employee employee;
 
-    public EmployeePrincipal(Employee employee) {
+    public CustomUserDetails(Employee employee) {
         this.employee = employee;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + employee.getRole()));
     }
 
     @Override
