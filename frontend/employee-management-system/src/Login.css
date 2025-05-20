@@ -1,0 +1,9 @@
+* {
+  margin: auto;
+  padding: auto;
+}
+
+.container-sm {
+  margin-top: 100px;
+  width: 500px;
+}
