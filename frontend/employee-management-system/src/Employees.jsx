@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Employees.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
@@ -10,8 +10,39 @@ function AllEmployees() {
   }, []);
 
   const loadEmployees = async () => {
-    const result = await axios.get("http://localhost:8080/employee/all");
-    setEmployees(result.data);
+    try {
+      const token = localStorage.getItem("JWT");
+
+      const response = await axios.get("http://localhost:8080/employee/all", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setEmployees(response.data);
+    } catch (error) {
+      if (error.response) {
+        // Server responded with a status other than 2xx
+        console.error(
+          "Backend error:",
+          error.response.status,
+          error.response.data
+        );
+        alert(
+          `Error: ${error.response.status} - ${
+            error.response.data.message || error.message
+          }`
+        );
+      } else if (error.request) {
+        // Request made but no response
+        console.error("No response from server", error.request);
+        alert("No response from server. Check backend and CORS.");
+      } else {
+        // Something else happened
+        console.error("Error", error.message);
+        alert("Error: " + error.message);
+      }
+    }
   };
 
   return (
