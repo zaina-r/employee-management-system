@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./Login.css";
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 function Login() {
   const [user, setUser] = useState({
@@ -36,6 +37,14 @@ function Login() {
       });
 
       const token = response.data;
+      const decoded = jwtDecode(token)
+      const userRole = decoded.role
+
+      if (userRole === "employee") {
+        alert("No access")
+        return
+      }
+
       localStorage.setItem("JWT", token);
 
       alert("Login  Successful");
