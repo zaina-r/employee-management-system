@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@CrossOrigin("http://localhost:5173")
 public class SecurityConfig {
 
     @Autowired
@@ -35,6 +34,7 @@ public class SecurityConfig {
         //todo: check how this code works and more notes on builder pattern and lambda expressions
         return httpSecurity
                 .csrf(Customizer -> Customizer.disable())
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> request
                         .requestMatchers( "/auth/login")
                         .permitAll()
