@@ -82,4 +82,42 @@ function AllEmployees() {
   );
 }
 
+export function EmployeeProfile() {
+
+  const EmployeeDetails = () => {
+    const { id } = useParams(); // Get the emp ID from URL
+    const [employee, setEmployee] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+      const fetchEmployee = async () => {
+        try {
+          const res = await fetch(`http://localhost:8080/employee/${id}`);
+          if (!res.ok) throw new Error('Employee not found');
+          const data = await res.json();
+          setEmployee(data);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchEmployee();
+    }, [id]);
+
+    if (loading) return <p>Loading...</p>;
+    if (!employee) return <p>No employee found.</p>;
+
+    return (
+      <div>
+        <h2>{employee.name}</h2>
+        <p>Position: {employee.position}</p>
+        <p>Email: {employee.email}</p>
+        {/* Add more fields as needed */}
+      </div>
+    );
+  }
+}
+
 export default AllEmployees;
