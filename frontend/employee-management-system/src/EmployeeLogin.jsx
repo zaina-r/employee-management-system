@@ -4,7 +4,7 @@ import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-function AdminLogin() {
+function EmployeeLogin() {
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -103,4 +103,4 @@ function AdminLogin() {
   );
 }
 
-export default AdminLogin;
+export default EmployeeLogin;
