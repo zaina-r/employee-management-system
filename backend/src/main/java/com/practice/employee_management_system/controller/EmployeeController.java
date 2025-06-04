@@ -42,6 +42,18 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.findByEmployeeId(employeeId));
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<Employee> getEmployeeByUsername(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedUsername = authentication.getName();
+        Employee employee = employeeService
+                .findByUsername(loggedUsername);
+        if (!employee.getUsername().equals(loggedUsername)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        return ResponseEntity.ok(employee);
+    }
+
     @GetMapping("/department/{departmentName}")
     public ResponseEntity<List<Employee>> getEmployeesByDepartment(@PathVariable String departmentName){
         return  ResponseEntity.ok((employeeService.findByDepartmentName(departmentName)));

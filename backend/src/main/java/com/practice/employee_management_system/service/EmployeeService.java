@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +34,13 @@ public class EmployeeService {
             throw new RuntimeException("Employee not found");
         }
         return employeeRepository.findByEmployeeId(employeeId);
+    }
+
+    public Employee findByUsername(String username){
+        if(!employeeRepository.existsByUsername(username)){
+            throw new UsernameNotFoundException("Invalid username");
+        }
+        return employeeRepository.findByUsername(username);
     }
 
     public void addNewEmployee(Employee employee){

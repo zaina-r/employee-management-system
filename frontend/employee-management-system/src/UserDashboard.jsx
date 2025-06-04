@@ -2,8 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
-function UserDashboard({ username }) {
-  const [employee, setEmployee] = useState("");
+function UserDashboard() {
+  const [employee, setEmployee] = useState({});
 
   useEffect(() => {
     loadEmployee();
@@ -11,17 +11,21 @@ function UserDashboard({ username }) {
 
   const loadEmployee = async () => {
     try {
-      const token = localStorage.getItem("JWT");
-      const decoded = jwtDecode(token);
-      const employeeId = decoded.employeeId;
+      const token = localStorage.getItem("JWT")
+      const decoded = jwtDecode(token)
+      const employeeId = decoded.employeeId
 
-      const response = await axios.get("http://localhost:8080/employee/all", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        "http://localhost:8080/employee/me",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       setEmployee(response.data);
+      
     } catch (error) {
       if (error.response) {
         // Server responded with a status other than 2xx
@@ -47,14 +51,16 @@ function UserDashboard({ username }) {
     }
   };
 
-    return (<>
-    
-        <div className="container-fluid">
-            <h1>Welcome, {employee.firstName}</h1>
-            <p>EmployeeId: {employee.employeeId} | {employee.designation}</p>
-            
-        </div>
-    </>)
+  return (
+    <>
+      <div className="container-fluid">
+        <h1>Welcome, {employee.firstName}</h1>
+        <p>
+          EmployeeId: {employee.employeeId} | {employee.designation}
+        </p>
+      </div>
+    </>
+  );
 }
 
 export default UserDashboard;
