@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./Login.css";
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -37,17 +36,10 @@ function EmployeeLogin() {
       });
 
       const token = response.data;
-      const decoded = jwtDecode(token)
-      const userRole = decoded.role
-
-      if (userRole === "employee") {
-        alert("No access")
-        return
-      }
 
       localStorage.setItem("JWT", token);
 
-      alert("Login  Successful");
+      alert("Login Successful!");
 
       setRedirect(true);
     } catch (error) {
@@ -57,7 +49,7 @@ function EmployeeLogin() {
   };
 
   if (redirect) {
-    return <Navigate to="/employee/all" replace />;
+    return <Navigate to="/employee/dashboard" replace />;
   }
 
   return (
@@ -71,7 +63,7 @@ function EmployeeLogin() {
         onSubmit={handleSubmit}
       >
         <div className="mb-3">
-          <label for="usernameInput" className="form-label">
+          <label htmlFor="usernameInput" className="form-label">
             Username
           </label>
           <input
@@ -84,7 +76,7 @@ function EmployeeLogin() {
           />
         </div>
         <div className="mb-3">
-          <label for="passwordInput" className="form-label">
+          <label htmlFor="passwordInput" className="form-label">
             Password
           </label>
           <input
