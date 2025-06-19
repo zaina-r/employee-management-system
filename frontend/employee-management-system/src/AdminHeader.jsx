@@ -27,8 +27,8 @@ function AdminHeader({ employeeId, firstName, lastName }) {
                 <Dropdown as={NavItem}>
                   <Dropdown.Toggle as={NavLink}>Employees</Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item>View All</Dropdown.Item>
-                    <Dropdown.Item>Add New</Dropdown.Item>
+                    <Dropdown.Item onClick={() => navigate("/admin/employee/all")}>View All</Dropdown.Item>
+                    <Dropdown.Item onClick={() => navigate("/admin/add-employee")}>Add New</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
                 <Dropdown as={NavItem}>
