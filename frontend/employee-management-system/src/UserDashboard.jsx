@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import EmployeeHeader from "./EmployeeHeader";
+import { Button, Col, Container, Row, Stack } from "react-bootstrap";
 
 function UserDashboard() {
   const [employee, setEmployee] = useState({});
@@ -53,12 +55,18 @@ function UserDashboard() {
 
   return (
     <>
-      <div className="container-fluid">
-        <h1>Welcome, {employee.firstName}</h1>
+      <Container fluid className="p-0">
+        <EmployeeHeader
+        employeeId={employee.employeeId}
+        firstName={employee.firstName}
+        lastName={employee.lastName}
+      />
+      </Container>
+        {/* <h1>Welcome, {employee.firstName}</h1>
         <p>
           EmployeeId: {employee.employeeId} | {employee.designation}
         </p>
-      </div>
+      </div> */}
     </>
   );
 }
