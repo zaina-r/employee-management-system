@@ -1,5 +1,6 @@
 package com.practice.employee_management_system.controller;
 
+import com.practice.employee_management_system.dto.EmployeeDTO;
 import com.practice.employee_management_system.model.Employee;
 import com.practice.employee_management_system.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/employee")
@@ -30,7 +30,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public ResponseEntity<Optional<Employee>> getEmployeeById(@PathVariable String employeeId) {
+    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable String employeeId) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String loggedUsername = authentication.getName();
@@ -39,7 +39,17 @@ public class EmployeeController {
         if (!employee.getUsername().equals(loggedUsername)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
-        return ResponseEntity.ok(employeeService.findByEmployeeId(employeeId));
+
+        EmployeeDTO dto = new EmployeeDTO(
+                employee.getEmployeeId(),
+                employee.getFirstName(),
+                employee.getLastName(),
+                employee.getEmail(),
+                employee.getDepartment().getDepartmentName(),
+                employee.getDesignation()
+        );
+
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/me")
