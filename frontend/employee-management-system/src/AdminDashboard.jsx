@@ -60,10 +60,6 @@ function AdminDashboard() {
     <>
       <AdminHeader />
       <h1>Welcome, {user.firstName}</h1>
-      <Button variant="outline-dark" onClick={handleAddNewEmployee}>
-        Add New Employee
-      </Button>
-      <Button variant="outline-dark" onClick={viewAllEmployees} >View All Employees</Button>
     </>
   );
 }

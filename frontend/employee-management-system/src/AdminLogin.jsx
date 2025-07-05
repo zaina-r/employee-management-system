@@ -57,7 +57,7 @@ function AdminLogin() {
   };
 
   if (redirect) {
-    return <Navigate to="/employee/all" replace />;
+    return <Navigate to="/admin/dashboard" replace />;
   }
 
   return (
