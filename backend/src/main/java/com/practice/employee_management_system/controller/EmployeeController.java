@@ -40,14 +40,15 @@ public class EmployeeController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
 
-        EmployeeDTO dto = new EmployeeDTO(
-                employee.getEmployeeId(),
-                employee.getFirstName(),
-                employee.getLastName(),
-                employee.getEmail(),
-                employee.getDepartment().getDepartmentName(),
-                employee.getDesignation()
-        );
+        EmployeeDTO dto = new EmployeeDTO();
+
+        dto.setEmpId(employee.getEmployeeId());
+        dto.setFirstName(employee.getFirstName());
+        dto.setLastName(employee.getLastName());
+        dto.setEmail(employee.getEmail());
+        dto.setDepartment(employee.getDepartment().getDepartmentName());
+        dto.setDesignation(employee.getDesignation());
+        dto.setRole(employee.getRole());
 
         return ResponseEntity.ok(dto);
     }

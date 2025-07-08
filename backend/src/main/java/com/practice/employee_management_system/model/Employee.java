@@ -22,6 +22,8 @@ public class Employee {
     private  String designation;
     @Column(nullable = false)
     private Date dateOfJoining;
+    @Column(nullable = false)
+    private int salary;
     @Column(unique = true, nullable = false)
     private String email;
     @Column(unique = true, nullable = false)
@@ -143,5 +145,13 @@ public class Employee {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
     }
 }
